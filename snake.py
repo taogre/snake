@@ -109,20 +109,26 @@ def draw_text(surf, text, size, x, y):
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
-
-#Funktion welche den GameOver-Screen macht und im Falle
-def gameOver():
-    hisc=open("highscore.txt","w+")
+    
+def highscore():
+    hisc=open("highscore.txt","r+")
     highscore=hisc.read()
     highscore_now=int(highscore)
     if score>highscore_now:
-        hisc.write(str(score))
+        save = open("highscore.txt","w")
+        save.write(str(score))
+        save.close()
         highscore_now=score
+    return highscore_now
     hisc.close()
+
+#Funktion welche den GameOver-Screen macht und im Falle
+def gameOver():
     window.fill(pygame.Color(73, 73, 73))
-    draw_text(window, "GAME OVER", 64, WIDTH / 2, HEIGHT / 4)
-    draw_text(window, "press any button to restart", 40, WIDTH / 2, (HEIGHT / 4)+60)
-    draw_text(window, "Score: "+ str(score), 64, WIDTH / 2, HEIGHT / 2)
+    draw_text(window, "GAME OVER", 64, WIDTH / 2, (HEIGHT / 10)*2)
+    draw_text(window, "Score: "+ str(score), 64, WIDTH / 2, (HEIGHT / 10)*5)
+    draw_text(window, "Highscore: "+ str(highscore()), 40, WIDTH / 2, (HEIGHT / 10)*6)
+    draw_text(window, "press any button to restart", 40, WIDTH / 2, (HEIGHT / 10)*9)
     pygame.display.flip()
     waiting = True
     while waiting:
