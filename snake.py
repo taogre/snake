@@ -112,6 +112,13 @@ def draw_text(surf, text, size, x, y):
 
 #Funktion welche den GameOver-Screen macht und im Falle
 def gameOver():
+    hisc=open("highscore.txt","w+")
+    highscore=hisc.read()
+    highscore_now=int(highscore)
+    if score>highscore_now:
+        hisc.write(str(score))
+        highscore_now=score
+    hisc.close()
     window.fill(pygame.Color(73, 73, 73))
     draw_text(window, "GAME OVER", 64, WIDTH / 2, HEIGHT / 4)
     draw_text(window, "press any button to restart", 40, WIDTH / 2, (HEIGHT / 4)+60)
